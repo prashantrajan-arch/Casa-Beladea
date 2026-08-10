@@ -1,7 +1,7 @@
 {
   "_instructions": "Add one entry per booked/blocked stretch. Dates are YYYY-MM-DD, end date is the checkout day. Delete this _instructions key or leave it — it's ignored by the site.",
   "booked": [
-    { "start": "2026-08-18", "end": "2026-08-21", "label": "Booked" },
+    { "start": "2026-08-14", "end": "2026-08-21", "label": "Booked" },
     { "start": "2026-09-01", "end": "2026-09-05", "label": "Owner stay" }
   ]
 }

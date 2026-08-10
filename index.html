@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Casa Beladea — Praia da Luz, Algarve</title>
-<meta name="description" content="A whitewashed house above Praia da Luz, Algarve. Check availability and enquire about your stay.">
+<meta name="description" content="A private oasis in Praia da Luz, Algarve, sleeping up to 12. Check availability and enquire about your stay.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -120,10 +120,15 @@
     display:grid; grid-template-columns:repeat(3,1fr); gap:0.6rem; margin-top:2.5rem;
   }
   .gallery-grid .g-item{
-    aspect-ratio:4/3; border-radius:2px; overflow:hidden;
+    aspect-ratio:4/3; border-radius:2px; overflow:hidden; position:relative;
   }
   .g-item img{
-    width:100%; height:100%; object-fit:cover; display:block;
+    position:absolute; inset:0; z-index:1; width:100%; height:100%; object-fit:cover; display:block;
+  }
+  .g-item .g-fallback{
+    position:absolute; inset:0; z-index:0; display:flex; align-items:flex-end; padding:0.6rem;
+    background:linear-gradient(160deg, var(--sand), var(--azulejo));
+    font-family:'IBM Plex Mono', monospace; font-size:0.62rem; color:rgba(34,48,58,0.55);
   }
 
   /* House features */
@@ -294,7 +299,7 @@
     <div class="hero-slide" data-src="images/4.jpg"><div class="hero-fallback">PHOTO 4 — replace images/4.jpg</div></div>
     <div class="hero-scrim"></div>
     <div class="hero-content">
-      <div class="hero-eyebrow"> Luz, Algarve · Monte Lemos · Sleeps 12</div>
+      <div class="hero-eyebrow">Luz, Algarve · Monte Lemos · Sleeps 12</div>
       <h1 class="hero-title">A private oasis in the heart of Praia da Luz</h1>
       <p class="hero-tagline">Elegance throughout with breathtaking ocean views and a short walk down to the beach. Available for direct booking most of the year.</p>
       <a href="#availability" class="hero-cta">Check availability →</a>
@@ -305,26 +310,26 @@
   <!-- GALLERY -->
   <section id="gallery">
     <div class="eyebrow">Gallery</div>
-  <h2 class="section-title">The house, room by room</h2>
-  <p class="lede">Five bedrooms, four with ocean views and private balconies, three with en-suite baths. Two large indoor kitchens with open concept dining and living areas on the first floor and lower level. Luxurious pool, hot tub and lounging areas to soak up the sun.</p> 
+    <h2 class="section-title">The house, room by room</h2>
+    <p class="lede">Five bedrooms, four with ocean views and private balconies, three with en-suite baths. Two large indoor kitchens with open concept dining and living areas on the first floor and lower level. Luxurious pool, hot tub and lounging areas to soak up the sun.</p>
     <div class="gallery-grid">
       <div class="g-item"><img src="images/5.jpg" alt="Casa Beladea — kitchen" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/5.jpg</div></div>
-      <div class="g-item"><img src="images/5a.jpg" alt="Casa Beladea — kitchen" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/5.jpg</div></div>
-      <div class="g-item"><img src="images/5b.jpg" alt="Casa Beladea — kitchen" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/5.jpg</div></div>
+      <div class="g-item"><img src="images/5a.jpg" alt="Casa Beladea — kitchen" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/5a.jpg</div></div>
+      <div class="g-item"><img src="images/5b.jpg" alt="Casa Beladea — kitchen" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/5b.jpg</div></div>
       <div class="g-item"><img src="images/6.jpg" alt="Casa Beladea — living room" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/6.jpg</div></div>
-      <div class="g-item"><img src="images/6a.jpg" alt="Casa Beladea — kitchen" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/5.jpg</div></div>
+      <div class="g-item"><img src="images/6a.jpg" alt="Casa Beladea — living room" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/6a.jpg</div></div>
       <div class="g-item"><img src="images/7.jpg" alt="Casa Beladea — bedroom" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/7.jpg</div></div>
-      <div class="g-item"><img src="images/7a.jpg" alt="Casa Beladea — bedroom" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/7.jpg</div></div>
-      <div class="g-item"><img src="images/8.jpg" alt="Casa Beladea — kitchen" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/5.jpg</div></div>
-      <div class="g-item"><img src="images/8a.jpg" alt="Casa Beladea — bathroom" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/8.jpg</div></div>
-      <div class="g-item"><img src="images/8b.jpg" alt="Casa Beladea — bathroom" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/8.jpg</div></div>
+      <div class="g-item"><img src="images/7a.jpg" alt="Casa Beladea — bedroom" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/7a.jpg</div></div>
+      <div class="g-item"><img src="images/8.jpg" alt="Casa Beladea — bathroom" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/8.jpg</div></div>
+      <div class="g-item"><img src="images/8a.jpg" alt="Casa Beladea — bathroom" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/8a.jpg</div></div>
+      <div class="g-item"><img src="images/8b.jpg" alt="Casa Beladea — bathroom" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/8b.jpg</div></div>
       <div class="g-item"><img src="images/9.jpg" alt="Casa Beladea — pool and jacuzzi" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/9.jpg</div></div>
-      <div class="g-item"><img src="images/9a.jpg" alt="Casa Beladea — bathroom" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/8.jpg</div></div>
-      <div class="g-item"><img src="images/10.jpg" alt="Casa Beladea — kitchen" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/5.jpg</div></div>
-      <div class="g-item"><img src="images/11.jpg" alt="Casa Beladea — living room" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/6.jpg</div></div>
-      <div class="g-item"><img src="images/12.jpg" alt="Casa Beladea — bedroom" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/7.jpg</div></div>
-      <div class="g-item"><img src="images/13.jpg" alt="Casa Beladea — bathroom" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/8.jpg</div></div>
-      <div class="g-item"><img src="images/14.jpg" alt="Casa Beladea — pool and jacuzzi" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/9.jpg</div></div>
+      <div class="g-item"><img src="images/9a.jpg" alt="Casa Beladea — pool and jacuzzi" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/9a.jpg</div></div>
+      <div class="g-item"><img src="images/10.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/10.jpg</div></div>
+      <div class="g-item"><img src="images/11.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/11.jpg</div></div>
+      <div class="g-item"><img src="images/12.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/12.jpg</div></div>
+      <div class="g-item"><img src="images/13.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/13.jpg</div></div>
+      <div class="g-item"><img src="images/14.jpg" alt="Casa Beladea — exterior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/14.jpg</div></div>
     </div>
   </section>
 
@@ -334,10 +339,10 @@
     <h2 class="section-title">Built for slow mornings and leisurely evenings</h2>
     <p class="lede">Built for seamless entertaining, the house spans three floors, boasting five bedrooms, seven beds, five bathrooms (three en-suite) and two kitchens. A perfect pool and hot tub with extensive lounge seating rounds out the perfect vacation experience. Add in a short 8 minute walk down to the beach and boardwalk to get the whole Praia da Luz experience.</p>
     <div class="feature-list">
-      <div class="feature"><h3>Bedrooms</h3><p>Five bedrooms, four with ocean views and private balconies, three with en-suite baths. With a total of seven beds (1 King, 2 queens, 2 doubles, 2 singles), the house can sleep twelve adults comfortably.</p></div>
-      <div class="feature"><h3>Outdoor space</h3><p>Jump in the sun-soaked pool and hot tub, rinse off in the outdoor shower and then lounge in one of the multiple outdoor seating areas. </p></div>
-      <div class="feature"><h3>Kitchen &amp; dining</h3><p>Two large indoor kitchens with dining and living areas on the first floor and lower level. Lower level walks out to the pool area with it's own outdoor kitchen and dining setup </p></div>
-      <div class="feature"><h3>Getting there</h3><p>The house is an easy 50 minute drive from Faro Airport or 2.5 hour drive from Lisbon almost entirely via Portugal's modern high-speed roadways</p></div>
+      <div class="feature"><h3>Bedrooms</h3><p>Five bedrooms, four with ocean views and private balconies, three with en-suite baths. With a total of seven beds (1 king, 2 queens, 2 doubles, 2 singles), the house can sleep twelve adults comfortably.</p></div>
+      <div class="feature"><h3>Outdoor space</h3><p>Jump in the sun-soaked pool and hot tub, rinse off in the outdoor shower, then lounge in one of the multiple outdoor seating areas.</p></div>
+      <div class="feature"><h3>Kitchen &amp; dining</h3><p>Two large indoor kitchens with dining and living areas on the first floor and lower level. The lower level walks out to the pool area with its own outdoor kitchen and dining setup.</p></div>
+      <div class="feature"><h3>Getting there</h3><p>An easy 50-minute drive from Faro Airport, or 2.5 hours from Lisbon, almost entirely via Portugal's modern high-speed roadways.</p></div>
     </div>
   </section>
 
@@ -384,7 +389,7 @@
   <section id="location" class="narrow">
     <div class="eyebrow">Location</div>
     <h2 class="section-title">Praia da Luz, Algarve</h2>
-    <p class="lede">A small former fishing village on Portugal's southwest coast, with a wide sandy beach, a working harbour, and the Rocha Negra headland at its eastern end. Today, it is a truly international enclave bustling with restaurants, bars and a lively boardwalk</p>
+    <p class="lede">A small former fishing village on Portugal's southwest coast, with a wide sandy beach, a working harbour, and the Rocha Negra headland at its western end. Today, it is a truly international enclave bustling with restaurants, bars and a lively boardwalk.</p>
     <div class="map-embed">
       <iframe
         src="https://maps.google.com/maps?q=Praia%20da%20Luz%2C%20Portugal&t=&z=14&ie=UTF8&iwloc=&output=embed"
@@ -422,7 +427,15 @@
 
 </main>
 
-<script>
+<script type="module">
+  import { getUsdToEur, nightlyPriceEUR as sharedNightlyPriceEUR, fmtEUR } from './pricing.js';
+  import { firebaseConfig } from './firebase-config.js';
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js';
+  import { getFirestore, collection, getDocs } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js';
+
+  const fbApp = initializeApp(firebaseConfig);
+  const db = getFirestore(fbApp);
+
   // ---- Mobile nav toggle ----
   const sidebar = document.getElementById('sidebar');
   const hamburger = document.getElementById('hamburger');
@@ -453,33 +466,19 @@
   }
   setInterval(() => showSlide((current + 1) % slides.length), 6000);
 
-  // ---- Availability calendar, driven by availability.json ----
+  // ---- Availability calendar, driven by Firestore (publicAvailability collection) ----
   const DOW = ['Mo','Tu','We','Th','Fr','Sa','Su'];
   let bookedRanges = [];
   let viewDate = new Date();
   viewDate.setDate(1);
 
-  // Nightly rates in USD by calendar month (0 = January ... 11 = December)
-  const MONTHLY_RATES_USD = [500, 600, 600, 700, 700, 800, 1000, 1000, 800, 700, 600, 600];
   let usdToEur = 0.865; // fallback rate, overwritten by live fetch below
-
-  fetch('https://api.frankfurter.app/latest?from=USD&to=EUR')
-    .then(r => r.json())
-    .then(data => {
-      if (data && data.rates && data.rates.EUR) {
-        usdToEur = data.rates.EUR;
-        renderCalendar();
-      }
-    })
-    .catch(() => { /* keep fallback rate */ });
+  getUsdToEur().then(rate => { usdToEur = rate; renderCalendar(); });
 
   function nightlyPriceEUR(dateObj){
-    const usd = MONTHLY_RATES_USD[dateObj.getMonth()];
-    return Math.round(usd * usdToEur);
+    return sharedNightlyPriceEUR(dateObj, usdToEur);
   }
-  function fmtEUR(n){
-    return '€' + n.toLocaleString('en-GB');
-  }
+
   function fmtDate(d){
     return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
   }
@@ -654,13 +653,16 @@
     document.getElementById('ef-name').focus();
   });
 
-  fetch('availability.json')
-    .then(r => r.json())
-    .then(data => {
-      bookedRanges = (data.booked || []).map(b => ({
-        start: new Date(b.start + 'T00:00:00'),
-        end: new Date(b.end + 'T00:00:00')
-      }));
+  getDocs(collection(db, 'publicAvailability'))
+    .then(snap => {
+      bookedRanges = [];
+      snap.forEach(docSnap => {
+        const b = docSnap.data();
+        bookedRanges.push({
+          start: new Date(b.start + 'T00:00:00'),
+          end: new Date(b.end + 'T00:00:00')
+        });
+      });
       renderCalendar();
     })
     .catch(() => renderCalendar());
