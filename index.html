@@ -165,11 +165,55 @@
     content:''; position:absolute; left:0.4rem; right:0.4rem; bottom:0.4rem; height:3px; background:var(--ochre);
   }
   .cal-grid .day.today{ outline:1.5px solid var(--atlantic); outline-offset:-1.5px; }
+  .cal-grid .day .day-price{
+    display:block; font-size:0.62rem; margin-top:0.2rem; color:rgba(34,48,58,0.5); letter-spacing:0.01em;
+  }
+  .cal-grid .day.past .day-price, .cal-grid .day.booked .day-price{ color:rgba(34,48,58,0.32); }
+  .cal-grid .day.selectable{ cursor:pointer; transition:background .12s ease; }
+  .cal-grid .day.selectable:hover{ background:rgba(62,123,148,0.08); }
+  .cal-grid .day.in-range{ background:rgba(62,123,148,0.12); }
+  .cal-grid .day.range-start,
+  .cal-grid .day.range-end{
+    background:var(--atlantic); color:var(--limewash); border-radius:1px;
+  }
+  .cal-grid .day.range-start .day-price,
+  .cal-grid .day.range-end .day-price{ color:rgba(246,242,233,0.75); }
   .legend{ display:flex; gap:1.6rem; padding:1rem 1.6rem; border-top:1px solid var(--line); font-size:0.82rem; color:rgba(34,48,58,0.7); }
   .legend span{ display:inline-flex; align-items:center; gap:0.4rem; }
   .swatch{ width:10px; height:10px; display:inline-block; }
   .swatch.open{ background:#fff; border:1px solid var(--line); }
   .swatch.booked{ background:var(--ochre); }
+
+  /* ---- Stay summary / trip pricer ---- */
+  .stay-summary{
+    display:flex; border-top:1px solid var(--line);
+  }
+  .stay-field{
+    flex:1; padding:1rem 1.6rem; border-right:1px solid var(--line);
+  }
+  .stay-field:last-child{ border-right:none; }
+  .stay-field label{
+    font-family:'IBM Plex Mono', monospace; font-size:0.68rem; text-transform:uppercase;
+    letter-spacing:0.06em; color:rgba(34,48,58,0.5); display:block; margin-bottom:0.3rem;
+  }
+  .stay-field .stay-value{ font-size:1.05rem; }
+  .stay-field.stay-total{ background:var(--limewash); }
+  .stay-field.stay-total .stay-value{ color:var(--ochre); font-weight:500; }
+  .stay-note{
+    padding:0.85rem 1.6rem; font-size:0.78rem; color:rgba(34,48,58,0.6);
+    border-top:1px solid var(--line);
+  }
+  .stay-note.stay-note-error{ color:var(--ochre); }
+  .stay-enquire{
+    display:block; width:100%; padding:0.95rem; border:none; border-top:1px solid var(--line);
+    background:var(--ink); color:var(--limewash); font-size:0.9rem; cursor:pointer;
+  }
+  .stay-enquire:disabled{ background:rgba(34,48,58,0.15); color:rgba(34,48,58,0.4); cursor:not-allowed; }
+  .stay-enquire:not(:disabled):hover{ background:var(--atlantic); }
+  .stay-disclaimer{
+    padding:0.7rem 1.6rem; font-size:0.68rem; color:rgba(34,48,58,0.45);
+    border-top:1px solid var(--line); background:var(--limewash);
+  }
 
   /* Map embed */
   .map-embed{
@@ -210,6 +254,9 @@
     .gallery-grid{ grid-template-columns:repeat(2,1fr); }
     .feature-list{ grid-template-columns:1fr; }
     .row2{ grid-template-columns:1fr; }
+    .stay-summary{ flex-wrap:wrap; }
+    .stay-field{ flex:1 1 50%; border-bottom:1px solid var(--line); }
+    .stay-field.stay-total{ flex:1 1 100%; border-right:none; }
   }
 </style>
 </head>
@@ -255,9 +302,9 @@
     <div class="hero-dots" id="heroDots"></div>
   </section>
 
-    <!-- GALLERY -->
-<section id="gallery">
-  <div class="eyebrow">Gallery</div>
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="eyebrow">Gallery</div>
   <h2 class="section-title">The house, room by room</h2>
   <p class="lede">Five bedrooms, four with ocean views and private balconies, three with en-suite baths. Two large indoor kitchens with open concept dining and living areas on the first floor and lower level. Luxurious pool, hot tub and lounging areas to soak up the sun.</p> 
     <div class="gallery-grid">
@@ -279,7 +326,7 @@
       <div class="g-item"><img src="images/13.jpg" alt="Casa Beladea — bathroom" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/8.jpg</div></div>
       <div class="g-item"><img src="images/14.jpg" alt="Casa Beladea — pool and jacuzzi" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/9.jpg</div></div>
     </div>
-</section>
+  </section>
 
   <!-- THE HOUSE -->
   <section id="house" class="narrow">
@@ -298,7 +345,7 @@
   <section id="availability">
     <div class="eyebrow">Availability</div>
     <h2 class="section-title">Check the logbook</h2>
-    <p class="lede">Dates in ochre are already taken. Everything else is open — enquire below with your preferred stretch (we ask for a five day minimum stay between June and September).</p>
+    <p class="lede">Dates in ochre are already taken. Prices shown per night in euros, converted at the current exchange rate. Click a check-in date, then a check-out date, to see your total.</p>
 
     <div class="logbook">
       <div class="logbook-head">
@@ -313,6 +360,23 @@
         <span><span class="swatch open"></span> Open</span>
         <span><span class="swatch booked"></span> Booked</span>
       </div>
+      <div class="stay-summary">
+        <div class="stay-field">
+          <label>Check-in</label>
+          <div class="stay-value mono" id="stayCheckin">—</div>
+        </div>
+        <div class="stay-field">
+          <label>Check-out</label>
+          <div class="stay-value mono" id="stayCheckout">—</div>
+        </div>
+        <div class="stay-field stay-total">
+          <label>Total (est.)</label>
+          <div class="stay-value mono" id="stayTotal">—</div>
+        </div>
+      </div>
+      <div class="stay-note mono" id="stayNote">Click a date below to set check-in.</div>
+      <button class="stay-enquire" id="stayEnquireBtn" disabled>Enquire about these dates</button>
+      <div class="stay-disclaimer mono">Prices shown are estimates in euros, converted at the current exchange rate. Final price is confirmed on booking.</div>
     </div>
   </section>
 
@@ -320,18 +384,14 @@
   <section id="location" class="narrow">
     <div class="eyebrow">Location</div>
     <h2 class="section-title">Praia da Luz, Algarve</h2>
-    <p class="lede">A small former fishing village on Portugal's southwest coast, with a wide sandy beach, a working harbour, and the Rocha Negra headland at its eastern end.</p>
+    <p class="lede">A small former fishing village on Portugal's southwest coast, with a wide sandy beach, a working harbour, and the Rocha Negra headland at its eastern end. Today, it is a truly international enclave bustling with restaurants, bars and a lively boardwalk</p>
     <div class="map-embed">
       <iframe
         src="https://maps.google.com/maps?q=Praia%20da%20Luz%2C%20Portugal&t=&z=14&ie=UTF8&iwloc=&output=embed"
-        width="100%"
-        height="420"
-        style="border:0;"
-        allowfullscreen=""
-        loading="lazy"
+        width="100%" height="420" style="border:0;"
+        allowfullscreen="" loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"
-        title="Map of Praia da Luz, Portugal">
-      </iframe>
+        title="Map of Praia da Luz, Portugal"></iframe>
     </div>
   </section>
 
@@ -399,8 +459,120 @@
   let viewDate = new Date();
   viewDate.setDate(1);
 
+  // Nightly rates in USD by calendar month (0 = January ... 11 = December)
+  const MONTHLY_RATES_USD = [500, 600, 600, 700, 700, 800, 1000, 1000, 800, 700, 600, 600];
+  let usdToEur = 0.865; // fallback rate, overwritten by live fetch below
+
+  fetch('https://api.frankfurter.app/latest?from=USD&to=EUR')
+    .then(r => r.json())
+    .then(data => {
+      if (data && data.rates && data.rates.EUR) {
+        usdToEur = data.rates.EUR;
+        renderCalendar();
+      }
+    })
+    .catch(() => { /* keep fallback rate */ });
+
+  function nightlyPriceEUR(dateObj){
+    const usd = MONTHLY_RATES_USD[dateObj.getMonth()];
+    return Math.round(usd * usdToEur);
+  }
+  function fmtEUR(n){
+    return '€' + n.toLocaleString('en-GB');
+  }
+  function fmtDate(d){
+    return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+  function isoDate(d){
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  }
+
   function dateInRanges(d){
     return bookedRanges.some(r => d >= r.start && d < r.end);
+  }
+
+  // ---- Stay selection state ----
+  let selStart = null;
+  let selEnd = null;
+
+  function resetSelection(){
+    selStart = null; selEnd = null;
+    updateStaySummary();
+  }
+
+  function rangeHasBookedNight(start, end){
+    const d = new Date(start);
+    while (d < end) {
+      if (dateInRanges(d)) return true;
+      d.setDate(d.getDate() + 1);
+    }
+    return false;
+  }
+
+  function computeTotal(start, end){
+    let total = 0;
+    const d = new Date(start);
+    while (d < end) {
+      total += nightlyPriceEUR(d);
+      d.setDate(d.getDate() + 1);
+    }
+    return total;
+  }
+
+  function updateStaySummary(){
+    const checkinEl = document.getElementById('stayCheckin');
+    const checkoutEl = document.getElementById('stayCheckout');
+    const totalEl = document.getElementById('stayTotal');
+    const noteEl = document.getElementById('stayNote');
+    const btn = document.getElementById('stayEnquireBtn');
+
+    checkinEl.textContent = selStart ? fmtDate(selStart) : '—';
+    checkoutEl.textContent = selEnd ? fmtDate(selEnd) : '—';
+
+    noteEl.classList.remove('stay-note-error');
+    btn.disabled = true;
+    totalEl.textContent = '—';
+
+    if (!selStart) {
+      noteEl.textContent = 'Click a date below to set check-in.';
+    } else if (!selEnd) {
+      noteEl.textContent = 'Now click a check-out date, later than ' + fmtDate(selStart) + '.';
+    } else if (rangeHasBookedNight(selStart, selEnd)) {
+      noteEl.textContent = 'Those dates include a night that\'s already booked — please choose a different range.';
+      noteEl.classList.add('stay-note-error');
+    } else {
+      const nights = Math.round((selEnd - selStart) / 86400000);
+      const total = computeTotal(selStart, selEnd);
+      totalEl.textContent = fmtEUR(total);
+      noteEl.textContent = nights + (nights === 1 ? ' night' : ' nights') + ' — estimated total, taxes not included.';
+      btn.disabled = false;
+    }
+  }
+
+  function applySelectionClasses(){
+    document.querySelectorAll('#calGrid .day').forEach(el => {
+      el.classList.remove('range-start', 'range-end', 'in-range');
+      const iso = el.dataset.date;
+      if (!iso) return;
+      const d = new Date(iso + 'T00:00:00');
+      if (selStart && d.getTime() === selStart.getTime()) el.classList.add('range-start');
+      if (selEnd && d.getTime() === selEnd.getTime()) el.classList.add('range-end');
+      if (selStart && selEnd && d > selStart && d < selEnd) el.classList.add('in-range');
+    });
+  }
+
+  function handleDayClick(dateObj){
+    if (!selStart || (selStart && selEnd)) {
+      selStart = dateObj;
+      selEnd = null;
+    } else if (dateObj <= selStart) {
+      selStart = dateObj;
+      selEnd = null;
+    } else {
+      selEnd = dateObj;
+    }
+    updateStaySummary();
+    applySelectionClasses();
   }
 
   function renderCalendar(){
@@ -429,12 +601,29 @@
       const dateObj = new Date(year, month, d);
       const el = document.createElement('div');
       el.className = 'day';
-      if (dateObj < today) el.classList.add('past');
+      el.dataset.date = isoDate(dateObj);
+
+      const numEl = document.createElement('span');
+      numEl.textContent = d;
+      el.appendChild(numEl);
+
+      const priceEl = document.createElement('span');
+      priceEl.className = 'day-price';
+      priceEl.textContent = fmtEUR(nightlyPriceEUR(dateObj));
+      el.appendChild(priceEl);
+
+      const isPast = dateObj < today;
+      const isBooked = dateInRanges(dateObj);
+      if (isPast) el.classList.add('past');
       if (dateObj.getTime() === today.getTime()) el.classList.add('today');
-      if (dateInRanges(dateObj)) el.classList.add('booked');
-      el.textContent = d;
+      if (isBooked) el.classList.add('booked');
+      if (!isPast) {
+        el.classList.add('selectable');
+        el.addEventListener('click', () => handleDayClick(dateObj));
+      }
       grid.appendChild(el);
     }
+    applySelectionClasses();
   }
 
   document.getElementById('calPrev').addEventListener('click', () => {
@@ -442,6 +631,27 @@
   });
   document.getElementById('calNext').addEventListener('click', () => {
     viewDate.setMonth(viewDate.getMonth() + 1); renderCalendar();
+  });
+
+  document.getElementById('stayEnquireBtn').addEventListener('click', () => {
+    if (!selStart || !selEnd) return;
+    const nights = Math.round((selEnd - selStart) / 86400000);
+    const total = computeTotal(selStart, selEnd);
+
+    document.getElementById('ef-checkin').value = isoDate(selStart);
+    document.getElementById('ef-checkout').value = isoDate(selEnd);
+
+    const msgEl = document.getElementById('ef-message');
+    const autoNote = 'Requested dates: ' + fmtDate(selStart) + ' to ' + fmtDate(selEnd) +
+      ' (' + nights + (nights === 1 ? ' night' : ' nights') + '). Estimated total: ' + fmtEUR(total) + ' (final price confirmed on booking).';
+    if (!msgEl.value.startsWith('Requested dates:')) {
+      msgEl.value = autoNote + (msgEl.value ? '\n\n' + msgEl.value : '\n\n');
+    } else {
+      msgEl.value = autoNote + '\n\n' + msgEl.value.split('\n\n').slice(1).join('\n\n');
+    }
+
+    document.getElementById('enquire').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('ef-name').focus();
   });
 
   fetch('availability.json')
