@@ -131,10 +131,10 @@
 
   /* Gallery grid */
   .gallery-grid{
-    display:grid; grid-template-columns:repeat(3,1fr); gap:0.6rem; margin-top:2.5rem;
+    display:grid; grid-template-columns:repeat(4,1fr); gap:0.6rem;
   }
   .gallery-grid .g-item{
-    aspect-ratio:4/3; border-radius:2px; overflow:hidden; position:relative;
+    aspect-ratio:4/3; border-radius:2px; overflow:hidden; position:relative; cursor:pointer;
   }
   .g-item img{
     position:absolute; inset:0; z-index:1; width:100%; height:100%; object-fit:cover; display:block;
@@ -143,6 +143,58 @@
     position:absolute; inset:0; z-index:0; display:flex; align-items:flex-end; padding:0.6rem;
     background:linear-gradient(160deg, var(--sand), var(--azulejo));
     font-family:'IBM Plex Mono', monospace; font-size:0.62rem; color:rgba(34,48,58,0.55);
+  }
+  .g-item .more-overlay{
+    position:absolute; inset:0; z-index:2; background:rgba(34,48,58,0.62);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--limewash); font-family:'Fraunces', serif; font-size:1.3rem;
+  }
+
+  /* Gallery sections */
+  .gallery-section{ margin-top:2.8rem; }
+  .gallery-section:first-of-type{ margin-top:2.5rem; }
+  .gallery-section-head{
+    display:flex; align-items:baseline; justify-content:space-between; gap:1rem;
+    margin-bottom:0.9rem; flex-wrap:wrap;
+  }
+  .gallery-section-title{
+    font-family:'Fraunces', serif; font-size:1.15rem; font-weight:500;
+  }
+  .view-more-btn{
+    font-family:'IBM Plex Mono', monospace; font-size:0.72rem; text-transform:uppercase;
+    letter-spacing:0.05em; color:var(--ochre); background:none; border:none; cursor:pointer;
+    padding:0.2rem 0; white-space:nowrap;
+  }
+  .view-more-btn:hover{ text-decoration:underline; }
+
+  /* Lightbox modal */
+  .lightbox-overlay{
+    display:none; position:fixed; inset:0; z-index:1000; background:rgba(20,26,30,0.92);
+    overflow-y:auto; padding:2.5rem 1.5rem;
+  }
+  .lightbox-overlay.open{ display:block; }
+  .lightbox-inner{
+    max-width:1200px; margin:0 auto; position:relative;
+  }
+  .lightbox-head{
+    display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem;
+    position:sticky; top:0; background:rgba(20,26,30,0.92); padding:0.5rem 0; z-index:2;
+  }
+  .lightbox-title{
+    font-family:'Fraunces', serif; color:var(--limewash); font-size:1.4rem;
+  }
+  .lightbox-close{
+    background:none; border:1px solid rgba(246,242,233,0.4); color:var(--limewash);
+    width:38px; height:38px; font-size:1.3rem; cursor:pointer; line-height:1;
+  }
+  .lightbox-close:hover{ background:rgba(246,242,233,0.12); }
+  .lightbox-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:0.7rem; padding-bottom:2rem;
+  }
+  .lightbox-grid .g-item{ aspect-ratio:4/3; cursor:default; }
+
+  @media (max-width: 720px){
+    .lightbox-grid{ grid-template-columns:repeat(2,1fr); }
   }
 
   /* House features */
@@ -326,72 +378,117 @@
     <div class="eyebrow">Gallery</div>
     <h2 class="section-title">The house, room by room</h2>
     <p class="lede">Five bedrooms, four with ocean views and private balconies, three with en-suite baths. Two large indoor kitchens with open concept dining and living areas on the first floor and lower level. Luxurious pool, hot tub and lounging areas to soak up the sun.</p>
-    <div class="gallery-grid">
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__4_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__4_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__10_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__10_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__64_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__64_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__69_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__69_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__70_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__70_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__74_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__74_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__75_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__75_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__122_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__122_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__124_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__124_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__126_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__126_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__127_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__127_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__129_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__129_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__130_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__130_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__132_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__132_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__133_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__133_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__141_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__141_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__147_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__147_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__153_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__153_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__160_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__160_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__199_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__199_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__206_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__206_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__207_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__207_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__210_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__210_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__211_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__211_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__213_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__213_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__30_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__30_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__31_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__31_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__40_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__40_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__53_.jpg" alt="Casa Beladea — exterior and grounds" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__53_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__19_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__19_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__25_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__25_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__29_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__29_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__33_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__33_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__36_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__36_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__42_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__42_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__45_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__45_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__47_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__47_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__50_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__50_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__54_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__54_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__59_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__59_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__60_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__60_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__62_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__62_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__68_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__68_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__77_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__77_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__78_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__78_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__86_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__86_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__87_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__87_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__90_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__90_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__90_2_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__90_2_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__90_4_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__90_4_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__91_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__91_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__92_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__92_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__93_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__93_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__95_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__95_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__96_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__96_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__97_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__97_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__101_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__101_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__107_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__107_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__108_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__108_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__110_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__110_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__112_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__112_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__113_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__113_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__115_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__115_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__116_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__116_.jpg</div></div>
-      <div class="g-item"><img src="images/Casa_Beladea_-_Praia_da_Luz__120_.jpg" alt="Casa Beladea — interior" loading="lazy" onerror="this.remove()"><div class="g-fallback mono">images/Casa_Beladea_-_Praia_da_Luz__120_.jpg</div></div>
+    <div class="gallery-section" data-section-block="primary-bedroom">
+      <div class="gallery-section-head">
+        <h3 class="gallery-section-title">Primary Bedroom</h3>
+        <button class="view-more-btn" data-open-section="primary-bedroom">View all 7 photos &rarr;</button>
+      </div>
+      <div class="gallery-grid">
+      <div class="g-item" data-section="primary-bedroom"><img src="images/7.jpg" alt="Casa Beladea — Primary Bedroom" loading="lazy" onerror="this.remove()"></div>
+      <div class="g-item" data-section="primary-bedroom"><img src="images/Casa_Beladea_-_Praia_da_Luz__47_.jpg" alt="Casa Beladea — Primary Bedroom" loading="lazy" onerror="this.remove()"></div>
+      <div class="g-item" data-section="primary-bedroom"><img src="images/Casa_Beladea_-_Praia_da_Luz__53_.jpg" alt="Casa Beladea — Primary Bedroom" loading="lazy" onerror="this.remove()"></div>
+      <div class="g-item" data-section="primary-bedroom"><img src="images/Casa_Beladea_-_Praia_da_Luz__54_.jpg" alt="Casa Beladea — Primary Bedroom" loading="lazy" onerror="this.remove()"><div class="more-overlay">+3</div></div>
+      </div>
+    </div>
+
+    <div class="gallery-section" data-section-block="kids-bedroom">
+      <div class="gallery-section-head">
+        <h3 class="gallery-section-title">Kids Bedroom</h3>
+        
+      </div>
+      <div class="gallery-grid">
+      <div class="g-item" data-section="kids-bedroom"><img src="images/Casa_Beladea_-_Praia_da_Luz__36_.jpg" alt="Casa Beladea — Kids Bedroom" loading="lazy" onerror="this.remove()"></div>
+      <div class="g-item" data-section="kids-bedroom"><img src="images/Casa_Beladea_-_Praia_da_Luz__40_.jpg" alt="Casa Beladea — Kids Bedroom" loading="lazy" onerror="this.remove()"></div>
+      <div class="g-item" data-section="kids-bedroom"><img src="images/Casa_Beladea_-_Praia_da_Luz__42_.jpg" alt="Casa Beladea — Kids Bedroom" loading="lazy" onerror="this.remove()"></div>
+      </div>
+    </div>
+
+    <div class="gallery-section" data-section-block="guest-bedroom-1">
+      <div class="gallery-section-head">
+        <h3 class="gallery-section-title">Guest Bedroom 1</h3>
+        <button class="view-more-btn" data-open-section="guest-bedroom-1">View all 6 photos &rarr;</button>
+      </div>
+      <div class="gallery-grid">
+      <div class="g-item" data-section="guest-bedroom-1"><img src="images/3.jpg" alt="Casa Beladea — Guest Bedroom 1" loading="lazy" onerror="this.remove()"></div>
+      <div class="g-item" data-section="guest-bedroom-1"><img src="images/8.jpg" alt="Casa Beladea — Guest Bedroom 1" loading="lazy" onerror="this.remove()"></div>
+      <div class="g-item" data-section="guest-bedroom-1"><img src="images/Casa_Beladea_-_Praia_da_Luz__19_.jpg" alt="Casa Beladea — Guest Bedroom 1" loading="lazy" onerror="this.remove()"></div>
+      <div class="g-item" data-section="guest-bedroom-1"><img src="images/Casa_Beladea_-_Praia_da_Luz__25_.jpg" alt="Casa Beladea — Guest Bedroom 1" loading="lazy" onerror="this.remove()"><div class="more-overlay">+2</div></div>
+      </div>
+    </div>
+
+    <div class="gallery-section" data-section-block="guest-bedroom-2">
+      <div class="gallery-section-head">
+        <h3 class="gallery-section-title">Guest Bedroom 2</h3>
+        
+      </div>
+      <div class="gallery-grid">
+      <div class="g-item" data-section="guest-bedroom-2"><img src="images/Casa_Beladea_-_Praia_da_Luz__78_.jpg" alt="Casa Beladea — Guest Bedroom 2" loading="lazy" onerror="this.remove()"></div>
+      <div class="g-item" data-section="guest-bedroom-2"><img src="images/Casa_Beladea_-_Praia_da_Luz__86_.jpg" alt="Casa Beladea — Guest Bedroom 2" loading="lazy" onerror="this.remove()"></div>
+      </div>
+    </div>
+
+    <div class="gallery-section" data-section-block="guest-bedroom-3">
+      <div class="gallery-section-head">
+        <h3 class="gallery-section-title">Guest Bedroom 3</h3>
+        
+      </div>
+      <div class="gallery-grid">
+      <div class="g-item" data-section="guest-bedroom-3"><img src="images/Casa_Beladea_-_Praia_da_Luz__107_.jpg" alt="Casa Beladea — Guest Bedroom 3" loading="lazy" onerror="this.remove()"></div>
+      <div class="g-item" data-section="guest-bedroom-3"><img src="images/Casa_Beladea_-_Praia_da_Luz__108_.jpg" alt="Casa Beladea — Guest Bedroom 3" loading="lazy" onerror="this.remove()"></div>
+      <div class="g-item" data-section="guest-bedroom-3"><img src="images/Casa_Beladea_-_Praia_da_Luz__120_.jpg" alt="Casa Beladea — Guest Bedroom 3" loading="lazy" onerror="this.remove()"></div>
+      </div>
+    </div>
+
+    <div class="gallery-section" data-section-block="upstairs-living">
+      <div class="gallery-section-head">
+        <h3 class="gallery-section-title">Upstairs Kitchen, Dining &amp; Living Room</h3>
+        <button class="view-more-btn" data-open-section="upstairs-living">View all 11 photos &rarr;</button>
+      </div>
+      <div class="gallery-grid">
+      <div class="g-item" data-section="upstairs-living"><img src="images/5.jpg" alt="Casa Beladea — Upstairs Kitchen, Dining and Living Room" loading="lazy" onerror="this.remove()"></div>
+      <div class="g-item" data-section="upstairs-living"><img src="images/Casa_Beladea_-_Praia_da_Luz__87_.jpg" alt="Casa Beladea — Upstairs Kitchen, Dining and Living Room" loading="lazy" onerror="this.remove()"></div>
+      <div class="g-item" data-section="upstairs-living"><img src="images/Casa_Beladea_-_Praia_da_Luz__90_.jpg" alt="Casa Beladea — Upstairs Kitchen, Dining and Living Room" loading="lazy" onerror="this.remove()"></div>
+      <div class="g-item" data-section="upstairs-living"><img src="images/Casa_Beladea_-_Praia_da_Luz__91_.jpg" alt="Casa Beladea — Upstairs Kitchen, Dining and Living Room" loading="lazy" onerror="this.remove()"><div class="more-overlay">+7</div></div>
+      </div>
+    </div>
+
+    <div class="gallery-section" data-section-block="lower-level-living">
+      <div class="gallery-section-head">
+        <h3 class="gallery-section-title">Lower Level Kitchen, Dining &amp; Living Room</h3>
+        <button class="view-more-btn" data-open-section="lower-level-living">View all 5 photos &rarr;</button>
+      </div>
+      <div class="gallery-grid">
+      <div class="g-item" data-section="lower-level-living"><img src="images/Casa_Beladea_-_Praia_da_Luz__110_.jpg" alt="Casa Beladea — Lower Level Kitchen, Dining and Living Room" loading="lazy" onerror="this.remove()"></div>
+      <div class="g-item" data-section="lower-level-living"><img src="images/Casa_Beladea_-_Praia_da_Luz__112_.jpg" alt="Casa Beladea — Lower Level Kitchen, Dining and Living Room" loading="lazy" onerror="this.remove()"></div>
+      <div class="g-item" data-section="lower-level-living"><img src="images/Casa_Beladea_-_Praia_da_Luz__113_.jpg" alt="Casa Beladea — Lower Level Kitchen, Dining and Living Room" loading="lazy" onerror="this.remove()"></div>
+      <div class="g-item" data-section="lower-level-living"><img src="images/Casa_Beladea_-_Praia_da_Luz__115_.jpg" alt="Casa Beladea — Lower Level Kitchen, Dining and Living Room" loading="lazy" onerror="this.remove()"><div class="more-overlay">+1</div></div>
+      </div>
+    </div>
+
+    <div class="gallery-section" data-section-block="pool-patio">
+      <div class="gallery-section-head">
+        <h3 class="gallery-section-title">Pool &amp; Patio</h3>
+        <button class="view-more-btn" data-open-section="pool-patio">View all 14 photos &rarr;</button>
+      </div>
+      <div class="gallery-grid">
+      <div class="g-item" data-section="pool-patio"><img src="images/1.jpg" alt="Casa Beladea — Pool and Patio" loading="lazy" onerror="this.remove()"></div>
+      <div class="g-item" data-section="pool-patio"><img src="images/9.jpg" alt="Casa Beladea — Pool and Patio" loading="lazy" onerror="this.remove()"></div>
+      <div class="g-item" data-section="pool-patio"><img src="images/Casa_Beladea_-_Praia_da_Luz__124_.jpg" alt="Casa Beladea — Pool and Patio" loading="lazy" onerror="this.remove()"></div>
+      <div class="g-item" data-section="pool-patio"><img src="images/Casa_Beladea_-_Praia_da_Luz__126_.jpg" alt="Casa Beladea — Pool and Patio" loading="lazy" onerror="this.remove()"><div class="more-overlay">+10</div></div>
+      </div>
+    </div>
+
+    <div class="gallery-section" data-section-block="exterior-views">
+      <div class="gallery-section-head">
+        <h3 class="gallery-section-title">Exterior Views</h3>
+        <button class="view-more-btn" data-open-section="exterior-views">View all 8 photos &rarr;</button>
+      </div>
+      <div class="gallery-grid">
+      <div class="g-item" data-section="exterior-views"><img src="images/2.jpg" alt="Casa Beladea — Exterior Views" loading="lazy" onerror="this.remove()"></div>
+      <div class="g-item" data-section="exterior-views"><img src="images/4.jpg" alt="Casa Beladea — Exterior Views" loading="lazy" onerror="this.remove()"></div>
+      <div class="g-item" data-section="exterior-views"><img src="images/Casa_Beladea_-_Praia_da_Luz__10_.jpg" alt="Casa Beladea — Exterior Views" loading="lazy" onerror="this.remove()"></div>
+      <div class="g-item" data-section="exterior-views"><img src="images/Casa_Beladea_-_Praia_da_Luz__69_.jpg" alt="Casa Beladea — Exterior Views" loading="lazy" onerror="this.remove()"><div class="more-overlay">+4</div></div>
+      </div>
     </div>
   </section>
 
@@ -489,6 +586,17 @@
 
 </main>
 
+<!-- Gallery lightbox -->
+<div class="lightbox-overlay" id="lightboxOverlay">
+  <div class="lightbox-inner">
+    <div class="lightbox-head">
+      <h3 class="lightbox-title" id="lightboxTitle">—</h3>
+      <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+    </div>
+    <div class="lightbox-grid" id="lightboxGrid"></div>
+  </div>
+</div>
+
 <script type="module">
   import { getUsdToEur, nightlyPriceEUR as sharedNightlyPriceEUR, fmtEUR } from './pricing.js';
   import { firebaseConfig } from './firebase-config.js';
@@ -497,6 +605,55 @@
 
   const fbApp = initializeApp(firebaseConfig);
   const db = getFirestore(fbApp);
+
+  // ---- Gallery lightbox ----
+  const GALLERY_SECTIONS = {
+    "primary-bedroom": { title: "Primary Bedroom", images: ["images/7.jpg", "images/Casa_Beladea_-_Praia_da_Luz__47_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__53_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__54_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__59_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__60_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__64_.jpg"] },
+    "kids-bedroom": { title: "Kids Bedroom", images: ["images/Casa_Beladea_-_Praia_da_Luz__36_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__40_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__42_.jpg"] },
+    "guest-bedroom-1": { title: "Guest Bedroom 1", images: ["images/3.jpg", "images/8.jpg", "images/Casa_Beladea_-_Praia_da_Luz__19_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__25_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__30_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__31_.jpg"] },
+    "guest-bedroom-2": { title: "Guest Bedroom 2", images: ["images/Casa_Beladea_-_Praia_da_Luz__78_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__86_.jpg"] },
+    "guest-bedroom-3": { title: "Guest Bedroom 3", images: ["images/Casa_Beladea_-_Praia_da_Luz__107_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__108_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__120_.jpg"] },
+    "upstairs-living": { title: "Upstairs Kitchen, Dining & Living Room", images: ["images/5.jpg", "images/Casa_Beladea_-_Praia_da_Luz__87_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__90_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__91_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__92_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__95_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__96_.jpg", "images/6.jpg", "images/Casa_Beladea_-_Praia_da_Luz__97_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__101_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__153_.jpg"] },
+    "lower-level-living": { title: "Lower Level Kitchen, Dining & Living Room", images: ["images/Casa_Beladea_-_Praia_da_Luz__110_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__112_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__113_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__115_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__116_.jpg"] },
+    "pool-patio": { title: "Pool & Patio", images: ["images/1.jpg", "images/9.jpg", "images/Casa_Beladea_-_Praia_da_Luz__124_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__126_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__127_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__129_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__130_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__132_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__133_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__141_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__147_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__160_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__207_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__213_.jpg"] },
+    "exterior-views": { title: "Exterior Views", images: ["images/2.jpg", "images/4.jpg", "images/Casa_Beladea_-_Praia_da_Luz__10_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__69_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__70_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__74_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__75_.jpg", "images/Casa_Beladea_-_Praia_da_Luz__122_.jpg"] }
+  };
+
+  const lightboxOverlay = document.getElementById('lightboxOverlay');
+  const lightboxTitle = document.getElementById('lightboxTitle');
+  const lightboxGrid = document.getElementById('lightboxGrid');
+  const lightboxClose = document.getElementById('lightboxClose');
+
+  function openLightbox(sectionId){
+    const section = GALLERY_SECTIONS[sectionId];
+    if (!section) return;
+    lightboxTitle.textContent = section.title;
+    lightboxGrid.innerHTML = section.images.map(src =>
+      `<div class="g-item"><img src="${src}" alt="Casa Beladea — ${section.title}" loading="lazy" onerror="this.closest('.g-item').remove()"></div>`
+    ).join('');
+    lightboxOverlay.classList.add('open');
+    lightboxOverlay.scrollTop = 0;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox(){
+    lightboxOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('[data-open-section]').forEach(btn => {
+    btn.addEventListener('click', () => openLightbox(btn.dataset.openSection));
+  });
+  document.querySelectorAll('.gallery-grid .g-item[data-section]').forEach(item => {
+    item.addEventListener('click', () => openLightbox(item.dataset.section));
+  });
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightboxOverlay.addEventListener('click', (e) => {
+    if (e.target === lightboxOverlay) closeLightbox();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightboxOverlay.classList.contains('open')) closeLightbox();
+  });
 
   // ---- Mobile nav toggle ----
   const sidebar = document.getElementById('sidebar');
