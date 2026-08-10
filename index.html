@@ -229,6 +229,16 @@
     padding:1.1rem 1.6rem; border-bottom:1px solid var(--line);
   }
   .logbook-head h3{ font-size:1.1rem; }
+  .logbook-head-right{ display:flex; align-items:center; gap:0.8rem; }
+  .currency-toggle{ display:flex; border:1px solid var(--line); }
+  .currency-btn{
+    font-family:'IBM Plex Mono', monospace; font-size:0.7rem; letter-spacing:0.03em;
+    padding:0.4rem 0.65rem; background:none; border:none; cursor:pointer;
+    color:rgba(34,48,58,0.5);
+  }
+  .currency-btn + .currency-btn{ border-left:1px solid var(--line); }
+  .currency-btn.active{ background:var(--atlantic); color:var(--limewash); }
+  .currency-btn:not(.active):hover{ background:var(--limewash); }
   .logbook-nav{ display:flex; gap:0.4rem; }
   .logbook-nav button{
     width:32px; height:32px; border:1px solid var(--line); background:none; cursor:pointer;
@@ -344,6 +354,8 @@
     .stay-summary{ flex-wrap:wrap; }
     .stay-field{ flex:1 1 50%; border-bottom:1px solid var(--line); }
     .stay-field.stay-total{ flex:1 1 100%; border-right:none; }
+    .logbook-head{ flex-wrap:wrap; gap:0.7rem; }
+    .logbook-head-right{ width:100%; justify-content:space-between; }
   }
 </style>
 </head>
@@ -525,14 +537,20 @@
   <section id="availability">
     <div class="eyebrow">Availability</div>
     <h2 class="section-title">Check the logbook</h2>
-    <p class="lede">Dates in ochre are already taken. Prices shown per night in euros, converted at the current exchange rate. Click a check-in date, then a check-out date, to see your total.</p>
+    <p class="lede">Dates in ochre are already taken. Prices shown per night in euros — use the toggle above the calendar to see an estimate in USD. Click a check-in date, then a check-out date, to see your total.</p>
 
     <div class="logbook">
       <div class="logbook-head">
         <h3 id="calMonthLabel" class="mono">—</h3>
-        <div class="logbook-nav">
-          <button id="calPrev" aria-label="Previous month">‹</button>
-          <button id="calNext" aria-label="Next month">›</button>
+        <div class="logbook-head-right">
+          <div class="currency-toggle" role="group" aria-label="Currency">
+            <button class="currency-btn active" id="currencyEUR" data-currency="EUR">EUR</button>
+            <button class="currency-btn" id="currencyUSD" data-currency="USD">USD</button>
+          </div>
+          <div class="logbook-nav">
+            <button id="calPrev" aria-label="Previous month">‹</button>
+            <button id="calNext" aria-label="Next month">›</button>
+          </div>
         </div>
       </div>
       <div class="cal-grid" id="calGrid"></div>
@@ -556,7 +574,7 @@
       </div>
       <div class="stay-note mono" id="stayNote">Click a date below to set check-in.</div>
       <button class="stay-enquire" id="stayEnquireBtn" disabled>Enquire about these dates</button>
-      <div class="stay-disclaimer mono">Prices shown are estimates in euros, converted at the current exchange rate. Final price is confirmed on booking.</div>
+      <div class="stay-disclaimer mono">Prices are set in euros. The USD amount is an estimate at the current exchange rate. Final price is confirmed on booking.</div>
     </div>
   </section>
 
@@ -617,7 +635,7 @@
 </div>
 
 <script type="module">
-  import { getUsdToEur, nightlyPriceEUR as sharedNightlyPriceEUR, fmtEUR } from './pricing.js';
+  import { getEurToUsd, nightlyPriceEUR, fmtEUR, fmtPrice, toDisplayAmount } from './pricing.js';
   import { firebaseConfig } from './firebase-config.js';
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js';
   import { getFirestore, collection, getDocs } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js';
@@ -743,11 +761,15 @@
   let viewDate = new Date();
   viewDate.setDate(1);
 
-  let usdToEur = 0.865; // fallback rate, overwritten by live fetch below
-  getUsdToEur().then(rate => { usdToEur = rate; renderCalendar(); });
+  let currentCurrency = 'EUR';
+  let eurToUsdRate = 1.155; // fallback rate, overwritten by live fetch below
+  getEurToUsd().then(rate => {
+    eurToUsdRate = rate;
+    if (currentCurrency === 'USD') { renderCalendar(); updateStaySummary(); }
+  });
 
-  function nightlyPriceEUR(dateObj){
-    return sharedNightlyPriceEUR(dateObj, usdToEur);
+  function nightlyPriceDisplay(dateObj){
+    return toDisplayAmount(nightlyPriceEUR(dateObj), currentCurrency, eurToUsdRate);
   }
 
   function fmtDate(d){
@@ -813,7 +835,8 @@
     } else {
       const nights = Math.round((selEnd - selStart) / 86400000);
       const total = computeTotal(selStart, selEnd);
-      totalEl.textContent = fmtEUR(total);
+      const displayTotal = toDisplayAmount(total, currentCurrency, eurToUsdRate);
+      totalEl.textContent = fmtPrice(displayTotal, currentCurrency);
       noteEl.textContent = nights + (nights === 1 ? ' night' : ' nights') + ' — estimated total, taxes not included.';
       btn.disabled = false;
     }
@@ -879,7 +902,7 @@
 
       const priceEl = document.createElement('span');
       priceEl.className = 'day-price';
-      priceEl.textContent = fmtEUR(nightlyPriceEUR(dateObj));
+      priceEl.textContent = fmtPrice(nightlyPriceDisplay(dateObj), currentCurrency);
       el.appendChild(priceEl);
 
       const isPast = dateObj < today;
@@ -901,6 +924,16 @@
   });
   document.getElementById('calNext').addEventListener('click', () => {
     viewDate.setMonth(viewDate.getMonth() + 1); renderCalendar();
+  });
+
+  document.querySelectorAll('.currency-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (btn.dataset.currency === currentCurrency) return;
+      currentCurrency = btn.dataset.currency;
+      document.querySelectorAll('.currency-btn').forEach(b => b.classList.toggle('active', b === btn));
+      renderCalendar();
+      updateStaySummary();
+    });
   });
 
   document.getElementById('stayEnquireBtn').addEventListener('click', () => {

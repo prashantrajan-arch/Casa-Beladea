@@ -221,8 +221,8 @@
 <script type="module">
   import { firebaseConfig } from '../firebase-config.js';
   import {
-    MONTHLY_RATES_USD, POOL_HEATING_EUR_PER_NIGHT, MIDWEEK_CLEANING_EUR_FLAT,
-    getUsdToEur, baseStayTotalEUR, poolHeatingTotalEUR, fmtEUR
+    MONTHLY_RATES_EUR, POOL_HEATING_EUR_PER_NIGHT, MIDWEEK_CLEANING_EUR_FLAT,
+    baseStayTotalEUR, poolHeatingTotalEUR, fmtEUR
   } from '../pricing.js';
 
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js';
@@ -236,9 +236,6 @@
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
-
-  let usdToEur = 0.865;
-  getUsdToEur().then(r => usdToEur = r);
 
   // ---- Auth ----
   const loginScreen = document.getElementById('loginScreen');
@@ -379,7 +376,7 @@
       const checkIn = new Date(b.checkIn + 'T00:00:00');
       const checkOut = new Date(b.checkOut + 'T00:00:00');
       const nights = Math.round((checkOut - checkIn) / 86400000);
-      const base = baseStayTotalEUR(checkIn, checkOut, usdToEur);
+      const base = baseStayTotalEUR(checkIn, checkOut);
       const heating = b.poolHeating ? poolHeatingTotalEUR(checkIn, checkOut) : 0;
       const cleaning = b.midweekCleaning ? MIDWEEK_CLEANING_EUR_FLAT : 0;
       const total = base + heating + cleaning;

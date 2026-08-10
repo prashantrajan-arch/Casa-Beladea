@@ -72,5 +72,5 @@ Either is genuinely $0/year unless you want your own domain name. Firebase's fre
 
 ## Notes
 - `availability.json` is no longer used by the live site — Firestore is now the source of truth. You can delete it, or keep it around as a historical reference.
-- Pricing logic (nightly rates, pool heating surcharge, cleaning fee) lives in one place — `pricing.js` — and both `index.html` and the dashboard import from it, so they can never drift out of sync. Edit rates there.
+- Pricing logic (nightly rates, pool heating surcharge, cleaning fee) lives in one place — `pricing.js` — and both `index.html` and the dashboard import from it, so they can never drift out of sync. Rates are set in EUR (that's the real charged currency); edit `MONTHLY_RATES_EUR` there to change them. The public calendar has a EUR/USD toggle that converts for display only, at the live exchange rate — bookings are always confirmed in EUR.
 - If you ever want her to reset her own password, or want more than one manager login, say the word — both are quick additions on top of what's here.
