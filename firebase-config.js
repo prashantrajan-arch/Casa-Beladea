@@ -8,10 +8,10 @@
 // not from hiding this file.
 
 export const firebaseConfig = {
-  apiKey: "REPLACE_ME",
-  authDomain: "REPLACE_ME.firebaseapp.com",
-  projectId: "REPLACE_ME",
-  storageBucket: "REPLACE_ME.appspot.com",
-  messagingSenderId: "REPLACE_ME",
-  appId: "REPLACE_ME"
+  apiKey: "AIzaSyDfapZIdUsQ3TfZ7PzQQxXX8qP3EN22TgI",
+  authDomain: "casa-beladea.firebaseapp.com",
+  projectId: "casa-beladea",
+  storageBucket: "casa-beladea.firebasestorage.app",
+  messagingSenderId: "311112307971",
+  appId: "1:311112307971:web:5136b842a420254cdd8536"
 };
