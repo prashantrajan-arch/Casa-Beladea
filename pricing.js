@@ -8,7 +8,7 @@
 
 // Nightly rates in EUR by calendar month (0 = January ... 11 = December).
 // Edit these to change pricing site-wide.
-export const MONTHLY_RATES_EUR = [500, 600, 600, 700, 700, 800, 1000, 1000, 800, 700, 600, 600];
+export const MONTHLY_RATES_EUR = [499, 599, 699, 699, 699, 799, 999, 999, 799, 699, 599, 599];
 
 // Extra charges, in EUR.
 export const POOL_HEATING_EUR_PER_NIGHT = 25;
@@ -21,7 +21,7 @@ export function isHeatingSeason(dateObj) {
   return m >= 9 || m <= 3;
 }
 
-const FALLBACK_EUR_TO_USD = 1.155;
+const FALLBACK_EUR_TO_USD = 1.2;
 
 // Live EUR -> USD rate, for the public site's optional USD toggle.
 export async function getEurToUsd() {
